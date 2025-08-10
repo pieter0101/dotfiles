@@ -1,0 +1,6 @@
+[Unit]
+Description=Run restic backup script
+
+[Service]
+Type=simple
+ExecStart=%h/scripts/restic-backup.sh

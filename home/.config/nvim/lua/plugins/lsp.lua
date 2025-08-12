@@ -26,6 +26,7 @@ return {
             qmlls = 'qmlls6',
             nixd = 'nixd',
             pyright = 'pyright',
+            tombi = 'tombi',
             -- yamlls = "yaml-language-server",
         }
 

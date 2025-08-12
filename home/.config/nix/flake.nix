@@ -93,6 +93,7 @@
             shellcheck
             shfmt
             stylua
+            tombi
           ];
         };
 

@@ -73,7 +73,6 @@ alias installparu='cd $(mktemp -d) && git clone https://aur.archlinux.org/paru.g
 alias installyay='cd $(mktemp -d) && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si && cd ~'
 alias spotikill='flatpak kill com.spotify.Client'
 alias stars='astroterm --color --constellations --speed 1000 --fps 64 --city Amsterdam'
-# alias pokeslots='~/pokeslots'
 alias browserestic='restic ls latest --ncdu | ncdu -f -'
 alias gentoomount='sudo mount /dev/nvme0n1p2 /mnt/gentoo -o subvol=@gentoo && sudo mount /dev/nvme0n1p2 /mnt/gentoo/home -o subvol=@home && sudo mount /dev/nvme0n1p1 /mnt/gentoo/boot/efi'
 alias make.conf='sudo nvim /etc/portage/make.conf'

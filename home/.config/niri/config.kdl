@@ -236,10 +236,15 @@ debug {
     wait-for-frame-completion-in-pipewire
 }
 
-// This line starts waybar, a commonly used bar for Wayland compositors.
-spawn-at-startup "waybar"
 spawn-at-startup "swww-daemon"
 spawn-at-startup "swww" "img" "~/Pictures/wallpapers/5815551-3840x2160-desktop-hd-4k-wallpaper-photo.jpg"
+spawn-at-startup "flatpak" "run" "com.spotify.Client"
+spawn-at-startup "flatpak" "run" "dev.vencord.Vesktop"
+spawn-at-startup "zen-browser"  //arch
+spawn-at-startup "zen"		//gentoo
+spawn-at-startup "ghostty"
+spawn-at-startup "thunderbird"
+
 layer-rule {
     // This is for swaybg; change for other wallpaper tools.
     // Find the right namespace by running niri msg layers.
@@ -255,7 +260,15 @@ workspace "browser" {
     open-on-output "PNP(AOC) AG241QG4 0x000002D6"
 }
 
+workspace "blank" {
+    open-on-output "PNP(AOC) AG241QG4 0x000002D6"
+
+}
 workspace "games" {
+    open-on-output "PNP(AOC) AG241QG4 0x000002D6"
+}
+
+workspace "email" {
     open-on-output "PNP(AOC) AG241QG4 0x000002D6"
 }
 
@@ -281,6 +294,7 @@ window-rule {
     match at-startup=true app-id="ghostty"
     open-on-workspace "main"
 }
+
 window-rule {
     match at-startup=true app-id="zen"
     open-fullscreen true
@@ -288,10 +302,13 @@ window-rule {
 }
 
 window-rule {
-    match at-startup=true app-id=r#"[Ss]potify"#
-    open-on-workspace "music-chat"
+    match at-startup=true app-id="thunderbird"
+    open-fullscreen true
+    open-on-workspace "email"
 }
+
 window-rule {
+    match at-startup=true app-id=r#"[Ss]potify"#
     match at-startup=true app-id=r#"vesktop"#
     open-on-workspace "music-chat"
 }
@@ -302,12 +319,6 @@ window-rule {
     open-focused false
     open-on-output "PNP(AOC) AG241QG4 0x000002D6"
 }
-
-spawn-at-startup "flatpak" "run" "com.spotify.Client"
-spawn-at-startup "flatpak" "run" "dev.vencord.Vesktop"
-spawn-at-startup "zen-browser"  //arch
-spawn-at-startup "zen"		//gentoo
-spawn-at-startup "ghostty"
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.

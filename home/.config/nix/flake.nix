@@ -85,6 +85,7 @@
             clang-tools
             gcc
             gdb
+            ghidra
             lua-language-server
             nixd
             nixfmt-rfc-style

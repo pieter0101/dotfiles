@@ -68,6 +68,7 @@ output "LG Electronics LG ULTRAFINE 110NTFA2D723" {
 
 environment {
     QT_QPA_PLATFORM "wayland"
+    QT_QPA_PLATFORMTHEME "qt6ct"
     ELECTRON_OZONE_PLATFORM_HINT "wayland"
     DISPLAY ":0"
 }

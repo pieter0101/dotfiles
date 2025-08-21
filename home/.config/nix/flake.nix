@@ -353,8 +353,17 @@
           ];
         };
 
+      resolve =
+        { pkgs, ... }:
+        {
+          environment.systemPackages = with pkgs; [
+            davinci-resolve-studio
+          ];
+        };
+
     in
     {
+
       darwinConfigurations."Pieters-MacBook-Air" = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = {

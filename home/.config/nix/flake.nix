@@ -45,35 +45,44 @@
       cli =
         { pkgs, ... }:
         {
-          environment.systemPackages = with pkgs; [
-            # 7zip
-            bat
-            bc
-            cpulimit
-            duf
-            eza
-            fastfetch
-            fd
-            fzf
-            git-lfs
-            glow
-            gnupg
-            htop
-            lazygit
-            ncdu
-            nix-tree
-            nvtopPackages.full
-            pastel
-            ripgrep
-            speedtest-cli
-            starship
-            stow
-            tealdeer
-            tree
-            yazi
-            yt-dlp
-            zoxide
-          ];
+          environment.systemPackages = with pkgs;
+            [
+              # 7zip
+              bat
+              bc
+              cpulimit
+              duf
+              eza
+              fastfetch
+              fd
+              fzf
+              git-lfs
+              glow
+              gnupg
+              htop
+              lazygit
+              ncdu
+              nix-tree
+              nvtopPackages.full
+              pastel
+              ripgrep
+              speedtest-cli
+              starship
+              stow
+              tealdeer
+              tree
+              yazi
+              yt-dlp
+              zoxide
+            ]
+            ++ (lib.optionals (pkgs.system == "x86_64-linux") [
+              beets
+              fwupd
+              hwinfo
+              playerctl
+              tailscale
+              usbutils
+            ]);
         };
 
       development =
@@ -103,9 +112,53 @@
         {
           environment.systemPackages =
             with pkgs;
-            # A complete disregard to the hard work the Nix developers have spent making their system reproducable
-            (builtins.map
-              (
+            let
+              packages = [
+                audacity
+                blender
+                darktable
+                qbittorrent
+                syncthing
+                vesktop
+              ]
+              ++ (lib.optionals (pkgs.system == "x86_64-linux") [
+                aseprite
+                baobao
+                blanket
+                boxbuddy
+                chromium
+                cpu-x
+                freecad
+                ghostty
+                ghostty
+                gimp3
+                godot
+                gpu-viewer
+                halloy
+                handbrake
+                inkscape
+                kicad
+                kiwix
+                krita
+                libreoffice-fresh
+                mission-center
+                newelle
+                obs-studio
+                onlyoffice-desktopeditors
+                parabolic
+                pavucontrol
+                qalculate-gtk
+                qpwgraph
+                renderdoc
+                thunderbird
+                tor-browser
+                upscaler
+                video-trimmer
+                vlc
+              ]);
+            in
+            lib.pipe packages [
+              (builtins.map (
                 pkg:
                 let
                   name = lib.toLower (pkg.pname);
@@ -116,14 +169,8 @@
                   else
                     builtins.trace "${name} is marked as broken, trying stable" pkgs-stable.${name}
                 )
-              )
-              [
-                blender
-                qbittorrent
-                syncthing
-                vesktop
-              ]
-            );
+              ))
+            ];
 
           fonts.packages = [
             pkgs.nerd-fonts.jetbrains-mono
@@ -163,45 +210,6 @@
           environment.systemPackages = with pkgs; [
             #"steam"
             #"zen"
-            aseprite
-            audacity
-            baobab
-            beets
-            blanket
-            boxbuddy
-            chromium
-            cpu-x
-            darktable
-            freecad
-            fwupd
-            ghostty
-            gimp3
-            godot
-            gpu-viewer
-            halloy
-            handbrake
-            hwinfo
-            inkscape
-            kicad
-            krita
-            libreoffice-fresh
-            mission-center
-            newelle
-            obs-studio
-            onlyoffice-desktopeditors
-            parabolic
-            pavucontrol
-            playerctl
-            qalculate-gtk
-            qpwgraph
-            renderdoc
-            tailscale
-            thunderbird
-            tor-browser
-            upscaler
-            usbutils
-            video-trimmer
-            vlc
           ];
           services.flatpak.enable = true;
           # Flatpaks: bottles flatseal sober
@@ -235,8 +243,6 @@
               "spotify"
               "raspberry-pi-imager"
               "zen"
-              #"blender"
-              #"vesktop"
             ];
             taps = [
             ];
@@ -289,14 +295,11 @@
           homebrew = {
             enable = true;
             brews = [
-              #"syncthing"
             ];
             casks = [
               "moonlight"
               "steam"
               "wine-stable"
-              #"blender"
-              #"vesktop"
             ];
             masApps = {
               "Apple developer" = 640199958;
@@ -310,29 +313,26 @@
       games =
         { pkgs, ... }:
         {
-          environment.systemPackages = with pkgs; [
-            prismlauncher
-            ryubing
-          ];
-        };
-
-      linux-games =
-        { pkgs, ... }:
-        {
-          environment.systemPackages = with pkgs; [
-            dolphin-emu
-            gamemode
-            heroic
-            luanti
-            openttd
-            pcsx2
-            ppsspp
-            retroarch
-            rpcs3
-            sunshine
-            superTux
-            superTuxKart
-          ];
+          environment.systemPackages =
+            with pkgs;
+            [
+              prismlauncher
+              ryubing
+            ]
+            ++ (lib.optionals (pkgs.system == "x86_64-linux") [
+              dolphin-emu
+              gamemode
+              heroic
+              luanti
+              openttd
+              pcsx2
+              ppsspp
+              retroarch
+              rpcs3
+              sunshine
+              superTux
+              superTuxKart
+            ]);
         };
 
       fun =

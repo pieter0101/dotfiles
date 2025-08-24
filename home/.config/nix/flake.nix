@@ -29,11 +29,17 @@
         { pkgs, ... }:
         {
           environment.systemPackages = with pkgs; [
+            bc
             btop
+            fzf
             git
+            gnupg
             neovim
             pwgen
             restic
+            ripgrep
+            stow
+            tealdeer
             tmux
             wgetpaste
             zellij
@@ -45,31 +51,26 @@
       cli =
         { pkgs, ... }:
         {
-          environment.systemPackages = with pkgs;
+          environment.systemPackages =
+            with pkgs;
             [
               # 7zip
               bat
-              bc
               cpulimit
               duf
               eza
               fastfetch
               fd
-              fzf
               git-lfs
               glow
-              gnupg
               htop
               lazygit
               ncdu
               nix-tree
               nvtopPackages.full
               pastel
-              ripgrep
               speedtest-cli
               starship
-              stow
-              tealdeer
               tree
               yazi
               yt-dlp

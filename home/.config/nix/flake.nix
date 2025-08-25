@@ -97,6 +97,7 @@
             gdb
             ghidra
             lua-language-server
+            nix-output-monitor
             nixd
             nixfmt-rfc-style
             pyright

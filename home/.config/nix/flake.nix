@@ -21,9 +21,34 @@
     }:
     let
 
-      pkgs-stable = import nixpkgs-stable {
-        system = "aarch64-darwin";
-      };
+      pkgs-stable =
+        {
+          system,
+        }:
+        import nixpkgs-stable { inherit system; };
+
+      nixpkgsStableOverlay =
+        final: prev:
+        let
+          stable = pkgs-stable { system = prev.stdenv.system; };
+        in
+        nixpkgs.lib.genAttrs (builtins.attrNames prev) (
+          name:
+          let
+            pkg = prev.${name};
+          in
+          if pkg ? meta && pkg.meta.broken or false then
+            builtins.trace "${name} is marked as broken, trying stable" stable.${name}
+          else
+            pkg
+        );
+
+      mkPkgs =
+        system:
+        import nixpkgs {
+          inherit system;
+          overlays = [ nixpkgsStableOverlay ];
+        };
 
       base =
         { pkgs, ... }:
@@ -110,69 +135,53 @@
         };
 
       desktop =
-        { pkgs, pkgs-stable, ... }:
+        { pkgs, ... }:
         {
           environment.systemPackages =
             with pkgs;
-            let
-              packages = [
-                audacity
-                blender
-                darktable
-                qbittorrent
-                syncthing
-                vesktop
-              ]
-              ++ (lib.optionals (pkgs.system == "x86_64-linux") [
-                aseprite
-                baobao
-                blanket
-                boxbuddy
-                chromium
-                cpu-x
-                freecad
-                ghostty
-                ghostty
-                gimp3
-                godot
-                gpu-viewer
-                halloy
-                handbrake
-                inkscape
-                kicad
-                kiwix
-                krita
-                libreoffice-fresh
-                mission-center
-                newelle
-                obs-studio
-                onlyoffice-desktopeditors
-                parabolic
-                pavucontrol
-                qalculate-gtk
-                qpwgraph
-                renderdoc
-                thunderbird
-                tor-browser
-                upscaler
-                video-trimmer
-                vlc
-              ]);
-            in
-            lib.pipe packages [
-              (builtins.map (
-                pkg:
-                let
-                  name = lib.toLower (pkg.pname);
-                in
-                (
-                  if !(pkg.meta.broken) then
-                    pkgs.${name}
-                  else
-                    builtins.trace "${name} is marked as broken, trying stable" pkgs-stable.${name}
-                )
-              ))
-            ];
+            [
+              audacity
+              blender
+              darktable
+              qbittorrent
+              syncthing
+              vesktop
+            ]
+            ++ (lib.optionals (pkgs.system == "x86_64-linux") [
+              aseprite
+              baobao
+              blanket
+              boxbuddy
+              chromium
+              cpu-x
+              freecad
+              ghostty
+              ghostty
+              gimp3
+              godot
+              gpu-viewer
+              halloy
+              handbrake
+              inkscape
+              kicad
+              kiwix
+              krita
+              libreoffice-fresh
+              mission-center
+              newelle
+              obs-studio
+              onlyoffice-desktopeditors
+              parabolic
+              pavucontrol
+              qalculate-gtk
+              qpwgraph
+              renderdoc
+              thunderbird
+              tor-browser
+              upscaler
+              video-trimmer
+              vlc
+            ]);
 
           fonts.packages = [
             pkgs.nerd-fonts.jetbrains-mono
@@ -369,7 +378,7 @@
       darwinConfigurations."Pieters-MacBook-Air" = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = {
-          inherit pkgs-stable;
+          pkgs = mkPkgs "aarch64-darwin";
         };
         modules = [
           base
@@ -394,7 +403,7 @@
       darwinConfigurations."Pieters-WerkBook" = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = {
-          inherit pkgs-stable;
+          pkgs = mkPkgs "aarch64-darwin";
         };
         modules = [
           base

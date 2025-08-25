@@ -79,6 +79,7 @@ alias make.conf='sudo nvim /etc/portage/make.conf'
 alias @world='sudo emerge --ask --verbose --update --deep --newuse @world'
 alias flake.nix='nvim ~/.config/nix/flake.nix'
 alias ssh='TERM=xterm-256color ssh'
+alias ip='ip --color=auto'
 
 if command -v equery &>/dev/null; then
     alias eqf='equery f'

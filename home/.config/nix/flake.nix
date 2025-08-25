@@ -50,328 +50,6 @@
           overlays = [ nixpkgsStableOverlay ];
         };
 
-      base =
-        { pkgs, ... }:
-        {
-          environment.systemPackages = with pkgs; [
-            bc
-            btop
-            fzf
-            git
-            gnupg
-            neovim
-            pwgen
-            restic
-            ripgrep
-            stow
-            tealdeer
-            tmux
-            wgetpaste
-            zellij
-          ];
-
-          nix.settings.experimental-features = "nix-command flakes";
-        };
-
-      cli =
-        { pkgs, ... }:
-        {
-          environment.systemPackages =
-            with pkgs;
-            [
-              # 7zip
-              bat
-              cpulimit
-              duf
-              eza
-              fastfetch
-              fd
-              git-lfs
-              glow
-              htop
-              lazygit
-              ncdu
-              nix-tree
-              nvtopPackages.full
-              pastel
-              speedtest-cli
-              starship
-              tree
-              yazi
-              yt-dlp
-              zoxide
-            ]
-            ++ (lib.optionals (pkgs.system == "x86_64-linux") [
-              beets
-              fwupd
-              hwinfo
-              playerctl
-              tailscale
-              usbutils
-            ]);
-        };
-
-      development =
-        { pkgs, ... }:
-        {
-          environment.systemPackages = with pkgs; [
-            bash-language-server
-            clang
-            clang-tools
-            gcc
-            gdb
-            ghidra
-            lua-language-server
-            nix-output-monitor
-            nixd
-            nixfmt-rfc-style
-            pyright
-            rustup
-            shellcheck
-            shfmt
-            stylua
-            tombi
-          ];
-        };
-
-      desktop =
-        { pkgs, ... }:
-        {
-          environment.systemPackages =
-            with pkgs;
-            [
-              audacity
-              blender
-              darktable
-              qbittorrent
-              syncthing
-              vesktop
-            ]
-            ++ (lib.optionals (pkgs.system == "x86_64-linux") [
-              aseprite
-              baobao
-              blanket
-              boxbuddy
-              chromium
-              cpu-x
-              freecad
-              ghostty
-              ghostty
-              gimp3
-              godot
-              gpu-viewer
-              halloy
-              handbrake
-              inkscape
-              kicad
-              kiwix
-              krita
-              libreoffice-fresh
-              mission-center
-              newelle
-              obs-studio
-              onlyoffice-desktopeditors
-              parabolic
-              pavucontrol
-              qalculate-gtk
-              qpwgraph
-              renderdoc
-              thunderbird
-              tor-browser
-              upscaler
-              video-trimmer
-              vlc
-            ]);
-
-          fonts.packages = [
-            pkgs.nerd-fonts.jetbrains-mono
-          ];
-
-          programs = {
-            zsh = {
-              enable = true;
-              enableAutosuggestions = true;
-              enableSyntaxHighlighting = true;
-            };
-          };
-        };
-
-      linux-shell =
-        { pkgs, ... }:
-        {
-          environment.systemPackages = with pkgs; [
-            apple-cursor
-            fuzzel
-            niri
-            quickshell
-            swww
-            wl-clipboard
-            xwayland-satellite
-          ];
-
-          fonts.packages = with pkgs; [
-            noto-fonts-cjk-sans
-          ];
-
-        };
-
-      linux-desktop =
-        { pkgs, ... }:
-        {
-          environment.systemPackages = with pkgs; [
-            #"steam"
-            #"zen"
-          ];
-          services.flatpak.enable = true;
-          # Flatpaks: bottles flatseal sober
-        };
-
-      goxlr =
-        { pkgs, ... }:
-        {
-          environment.systemPackages = with pkgs; [
-            goxlr-utility
-          ];
-          services.goxlr-utility.enable = true;
-        };
-
-      macOS =
-        { pkgs, ... }:
-        {
-          environment.systemPackages = with pkgs; [
-            mas
-          ];
-
-          homebrew = {
-            enable = true;
-            brews = [
-              #"syncthing"
-            ];
-            casks = [
-              "ghostty"
-              "maccy"
-              "obs"
-              "spotify"
-              "raspberry-pi-imager"
-              "zen"
-            ];
-            taps = [
-            ];
-            masApps = {
-              "Bitwarden" = 1352778147;
-              "tailscale" = 1475387142;
-              "xcode" = 497799835;
-            };
-            onActivation.autoUpdate = true;
-            onActivation.cleanup = "zap";
-            onActivation.upgrade = true;
-          };
-
-          services.aerospace.enable = true;
-
-          security.pam.services.sudo_local.touchIdAuth = true;
-
-          system = {
-            stateVersion = 6;
-            primaryUser = "pieter";
-            defaults = {
-              controlcenter = {
-                AirDrop = false;
-                BatteryShowPercentage = true;
-                Bluetooth = false;
-                Display = false;
-                FocusModes = false;
-                NowPlaying = true;
-                Sound = false;
-              };
-              dock.show-recents = false;
-              dock.autohide = true;
-              finder = {
-                AppleShowAllExtensions = true;
-                AppleShowAllFiles = true;
-                ShowPathbar = true;
-                ShowStatusBar = true;
-                _FXSortFoldersFirst = true;
-              };
-              NSGlobalDomain.NSWindowShouldDragOnGesture = true;
-            };
-          };
-        };
-
-      macOS-personal =
-        { pkgs, ... }:
-        {
-          environment.systemPackages = with pkgs; [
-          ];
-          homebrew = {
-            enable = true;
-            brews = [
-            ];
-            casks = [
-              "moonlight"
-              "steam"
-              "wine-stable"
-            ];
-            masApps = {
-              "Apple developer" = 640199958;
-            };
-            onActivation.autoUpdate = true;
-            onActivation.cleanup = "zap";
-            onActivation.upgrade = true;
-          };
-        };
-
-      games =
-        { pkgs, ... }:
-        {
-          environment.systemPackages =
-            with pkgs;
-            [
-              prismlauncher
-              ryubing
-            ]
-            ++ (lib.optionals (pkgs.system == "x86_64-linux") [
-              dolphin-emu
-              gamemode
-              heroic
-              luanti
-              openttd
-              pcsx2
-              ppsspp
-              retroarch
-              rpcs3
-              sunshine
-              superTux
-              superTuxKart
-            ]);
-        };
-
-      fun =
-        { pkgs, ... }:
-        {
-          environment.systemPackages = with pkgs; [
-            asciiquarium
-            astroterm
-            cbonsai
-            cmatrix
-            cowsay
-            figlet
-            fortune
-            krabby
-            lolcat
-            nyancat
-            sl
-          ];
-        };
-
-      resolve =
-        { pkgs, ... }:
-        {
-          environment.systemPackages = with pkgs; [
-            davinci-resolve-studio
-          ];
-        };
-
     in
     {
 
@@ -381,14 +59,18 @@
           pkgs = mkPkgs "aarch64-darwin";
         };
         modules = [
-          base
-          cli
-          development
-          desktop
-          macOS
-          macOS-personal
-          games
-          fun
+          {
+            imports = [
+              ./modules/base.nix
+              ./modules/cli.nix
+              ./modules/development.nix
+              ./modules/desktop.nix
+              ./modules/macOS.nix
+              ./modules/macOS-personal.nix
+              ./modules/games.nix
+              ./modules/fun.nix
+            ];
+          }
           nix-homebrew.darwinModules.nix-homebrew
           {
             nix-homebrew = {
@@ -406,11 +88,15 @@
           pkgs = mkPkgs "aarch64-darwin";
         };
         modules = [
-          base
-          cli
-          development
-          desktop
-          macOS
+          {
+            imports = [
+              ./modules/base.nix
+              ./modules/cli.nix
+              ./modules/development.nix
+              ./modules/desktop.nix
+              ./modules/macOS.nix
+            ];
+          }
           nix-homebrew.darwinModules.nix-homebrew
           {
             nix-homebrew = {

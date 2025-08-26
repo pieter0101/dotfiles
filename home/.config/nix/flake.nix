@@ -33,14 +33,20 @@
           stable = pkgs-stable { system = prev.stdenv.system; };
         in
         nixpkgs.lib.genAttrs (builtins.attrNames prev) (
-          name:
+          pkgName:
           let
-            pkg = prev.${name};
+            unstablePkg = prev.${pkgName} or null;
+            stablePkg = stable.${pkgName} or null;
+            isBroken = (unstablePkg.meta.broken or false);
           in
-          if pkg ? meta && pkg.meta.broken or false then
-            builtins.trace "${name} is marked as broken, trying stable" stable.${name}
+          if !isBroken then
+            unstablePkg
+          else if  !(stablePkg.meta.broken or false) then
+            builtins.trace "Using stable version of ${pkgName}, unstable is ${if isBroken then "broken" else "missing"}" stablePkg
+          else if unstablePkg != null then
+            builtins.trace "Warning: ${pkgName} is broken and no stable version available" unstablePkg
           else
-            pkg
+            throw "Package ${pkgName} not found in either unstable or stable"
         );
 
       mkPkgs =

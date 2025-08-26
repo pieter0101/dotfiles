@@ -3,6 +3,7 @@
   environment.systemPackages = with pkgs; [
     apple-cursor
     fuzzel
+    kdePackages.qt6ct
     niri
     quickshell
     satty

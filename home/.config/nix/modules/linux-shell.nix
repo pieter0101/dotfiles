@@ -5,6 +5,7 @@
     fuzzel
     niri
     quickshell
+    satty
     swww
     wl-clipboard
     xwayland-satellite

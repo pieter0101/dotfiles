@@ -70,13 +70,7 @@ environment {
     QT_QPA_PLATFORM "wayland"
     QT_QPA_PLATFORMTHEME "qt6ct"
     ELECTRON_OZONE_PLATFORM_HINT "wayland"
-    DISPLAY ":0"
 }
-
-spawn-at-startup "xwayland-satellite"
-//xwayland-satellite {
-//    path "xwayland-satellite"
-//}
 
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:

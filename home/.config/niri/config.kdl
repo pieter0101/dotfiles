@@ -228,7 +228,6 @@ layout {
 // See the binds section below for more spawn examples.
 
 debug {
-    wait-for-frame-completion-in-pipewire
 }
 
 spawn-at-startup "swww-daemon"

@@ -44,14 +44,13 @@ if [[ "$UNAME" == "Darwin" ]]; then
     tealdeer
 
     echo "Updating macOS..."
-    SOFTWAREUPDATE=$(softwareupdate --list 2>&1 1>/dev/null)
-    if [[ ! "${SOFTWAREUPDATE}" == "No new software available." ]]; then
+    SOFTWAREUPDATE=$(softwareupdate --list 2>&1)
+    if [[ ! "${SOFTWAREUPDATE}" =~ "No new software available" ]]; then
         echo "Update(s) found"
-        # This runs `softwareupdate --list` twice, needs work
-        UPDATES=$(softwareupdate --list)
-        if [[ "${UPDATES}" =~ "Action: restart" ]]; then
-            echo "Some updates require a restart"
-            read -r -p "Do you want to restart? [y/N] " response
+        echo "${SOFTWAREUPDATE}"
+        if [[ "${SOFTWAREUPDATE}" =~ "Action: restart" ]]; then
+            echo "At least 1 update requires a restart"
+            read -r -p "Do you want to install  the update(s) requiring a restart? [y/N] " response
             if [[ "${response,,}" =~ ^(yes|y)$ ]]; then
                 echo "Updating..."
                 sudo softwareupdate --install --recommended --restart

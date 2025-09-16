@@ -11,7 +11,6 @@
     ];
     casks = [
       "ghostty"
-      "maccy"
       "obs"
       "spotify"
       "raspberry-pi-imager"

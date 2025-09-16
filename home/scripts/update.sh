@@ -109,7 +109,7 @@ elif [[ "$UNAME" == "Linux" ]]; then
 
     if command -v flatpak >/dev/null 2>&1; then
         echo "Updating flatpaks..."
-        flatpak update --system -y
+        flatpak update --user -y
         echo
     fi
     dotfiles

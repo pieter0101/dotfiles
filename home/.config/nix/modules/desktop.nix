@@ -31,7 +31,6 @@
       krita
       libreoffice-fresh
       mission-center
-      newelle
       obs-studio
       onlyoffice-desktopeditors
       parabolic

@@ -11,73 +11,62 @@
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
   };
 
-  outputs =
-    inputs@{
-      self,
-      nix-darwin,
-      nixpkgs,
-      nixpkgs-stable,
-      nix-homebrew,
-    }:
-    let
+  outputs = {
+    nixpkgs,
+    nixpkgs-stable,
+    nix-darwin,
+    nix-homebrew,
+    ...
+  }: let
+    system = "aarch64-darwin";
 
-      pkgs-stable =
-        {
-          system,
-        }:
-        import nixpkgs-stable { inherit system; };
-
-      nixpkgsStableOverlay =
-        final: prev:
-        let
-          stable = pkgs-stable { system = prev.stdenv.system; };
+    nixpkgsStableOverlay = _: prev:
+      nixpkgs.lib.genAttrs (builtins.attrNames prev) (
+        pkgName: let
+          unstablePkg = prev.${pkgName};
+          stablePkg = import nixpkgs-stable { inherit (prev.stdenv) system; };
         in
-        nixpkgs.lib.genAttrs (builtins.attrNames prev) (
-          pkgName:
-          let
-            unstablePkg = prev.${pkgName} or null;
-            stablePkg = stable.${pkgName} or null;
-            isBroken = (unstablePkg.meta.broken or false);
-          in
-          if !isBroken then
-            unstablePkg
-          else if  !(stablePkg.meta.broken or false) then
-            builtins.trace "Using stable version of ${pkgName}, unstable is ${if isBroken then "broken" else "missing"}" stablePkg
-          else if unstablePkg != null then
-            builtins.trace "Warning: ${pkgName} is broken and no stable version available" unstablePkg
+          if unstablePkg == null then
+            if stablePkg == null then
+              throw "Error: ${pkgName} does not exist in unstable or stable"
+            else
+              if stablePkg.meta.broken or false then
+                builtins.trace "Warning: ${pkgName} is broken in unstable and stable" stablePkg
+              else
+                builtins.trace "Using stable version of ${pkgName}" stablePkg
           else
-            throw "Package ${pkgName} not found in either unstable or stable"
-        );
+            if unstablePkg.meta.broken or false then
+              builtins.trace "Warning: ${pkgName} is broken" unstablePkg
+            else
+              unstablePkg
+      );
 
-      mkPkgs =
-        system:
-        import nixpkgs {
-          inherit system;
-          overlays = [ nixpkgsStableOverlay ];
-        };
+    mkPkgs = system:
+      import nixpkgs {
+        inherit system;
+        overlays = [nixpkgsStableOverlay];
+      };
+  in {
+    darwinConfigurations = {
+      Pieters-MacBook-Air = nix-darwin.lib.darwinSystem {
+        inherit system;
 
-    in
-    {
-
-      darwinConfigurations."Pieters-MacBook-Air" = nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
         specialArgs = {
-          pkgs = mkPkgs "aarch64-darwin";
+          pkgs = mkPkgs system;
         };
+
         modules = [
-          {
-            imports = [
-              ./modules/base.nix
-              ./modules/cli.nix
-              ./modules/development.nix
-              ./modules/desktop.nix
-              ./modules/macOS.nix
-              ./modules/macOS-personal.nix
-              ./modules/games.nix
-              ./modules/fun.nix
-            ];
-          }
+          ./modules/base.nix
+          ./modules/cli.nix
+          ./modules/development.nix
+          ./modules/desktop.nix
+          ./modules/macOS.nix
+          ./modules/macOS-personal.nix
+          ./modules/games.nix
+          ./modules/fun.nix
+
           nix-homebrew.darwinModules.nix-homebrew
+
           {
             nix-homebrew = {
               enable = true;
@@ -88,22 +77,22 @@
         ];
       };
 
-      darwinConfigurations."Pieters-WerkBook" = nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
+      Pieters-WerkBook = nix-darwin.lib.darwinSystem {
+        inherit system;
+
         specialArgs = {
-          pkgs = mkPkgs "aarch64-darwin";
+          pkgs = mkPkgs system;
         };
+
         modules = [
-          {
-            imports = [
-              ./modules/base.nix
-              ./modules/cli.nix
-              ./modules/development.nix
-              ./modules/desktop.nix
-              ./modules/macOS.nix
-            ];
-          }
+          ./modules/base.nix
+          ./modules/cli.nix
+          ./modules/development.nix
+          ./modules/desktop.nix
+          ./modules/macOS.nix
+
           nix-homebrew.darwinModules.nix-homebrew
+
           {
             nix-homebrew = {
               enable = true;
@@ -114,4 +103,5 @@
         ];
       };
     };
+  };
 }

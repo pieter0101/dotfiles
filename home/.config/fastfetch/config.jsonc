@@ -7,111 +7,126 @@
     "title",
     "separator",
     {
-      "type": "custom", // SoftwareStart
-      "format": "┌─────────────────────────── Software ───────────────────────────┐"
+      "type": "custom",
+      "format": "{#1}{#cyan}┌─Software",
+      "keyColor": "cyan",
     },
     {
       "type": "os",
-      "key": "  OS",
+      "key": "├  OS",
       "keyColor": "cyan",
     },
     {
       "type": "host",
-      "key": "  Host",
+      "key": "├  Host",
       "keyColor": "cyan",
     },
     {
       "type": "kernel",
-      "key": "  Kernel",
+      "key": "├  Kernel",
       "keyColor": "cyan",
     },
     {
       "type": "uptime",
-      "key": "  Uptime",
+      "key": "├  Uptime",
       "keyColor": "cyan",
     },
     {
       "type": "packages",
-      "key": "  Packages",
+      "key": "├  Packages",
       "keyColor": "cyan",
     },
     {
       "type": "shell",
-      "key": "  Shell",
+      "key": "├  Shell",
       "keyColor": "cyan",
     },
     {
       "type": "de",
-      "key": " 󰧨 Desktop Environment",
+      "key": "├ 󰧨 Desktop Environment",
       "keyColor": "cyan",
     },
     {
       "type": "font",
-      "key": "  Font",
+      "key": "├  Font",
       "keyColor": "cyan",
     },
     {
       "type": "terminal",
-      "key": "  Terminal",
+      "key": "├  Terminal",
       "keyColor": "cyan",
     },
     {
       "type": "terminalfont",
-      "key": "  Terminal font",
+      "key": "└  Terminal font",
       "keyColor": "cyan",
     },
     "break",
     {
-      "type": "custom", // HardwareStart
-      "format": "┌───────────────────── Hardware Information ─────────────────────┐" // `\u001b` is `\033`, or `\e`
+      "type": "custom",
+      "format": "{#1}{#magenta}┌─Hardware",
+      "titleColor": "magenta",
+
     },
     {
       "type": "cpu",
-      "key": "  CPU",
+      "showPeCoreCount": true,
+      "temp": true,
+      "format": "{name} ({cores-physical}C/{cores-logical}T) @ {freq-max} - {temperature}",
+      "key": "├  CPU",
       "keyColor": "magenta",
     },
     {
       "type": "memory",
-      "key": "  Memory",
+      "key": "├  Memory",
       "keyColor": "magenta",
     },
     {
       "type": "gpu",
       "detectionMethod": "pci",
-      "key": "  GPU",
+      "driverSpecific": true,
+      "temp": true,
+      "format": "{name} - {temperature}",
+      "key": "├ 󰾲 GPU",
       "keyColor": "magenta",
     },
     {
       "type": "battery",
-      "key": "  Battery",
+      "key": "├  Battery",
       "keyColor": "magenta",
     },
     {
       "type": "localip",
-      "key": "  Local ip",
+      "key": "├  Local ip",
       "keyColor": "magenta",
     },
 
     {
       "type": "disk",
-      "key": " {icon} {}",
+      "key": "├ {icon} {}",
+      "keyColor": "magenta",
+    },
+    {
+      "type": "board",
+      "format": "{name}",
+      "key": "└  Board",
       "keyColor": "magenta",
     },
     "break",
     {
-      "type": "custom", // HardwareStart
-      "format": "┌──────────────────────────── Others ────────────────────────────┐" // `\u001b` is `\033`, or `\e`
+      "type": "custom",
+      "format": "{#1}{#blue}┌─Other"
     },
     {
       "type": "command",
-      "key": "  OS Age",
+      "key": "├  OS Age",
       "keyColor": "blue",
       "text": "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days"
     },
 
     {
       "type": "media",
-      "key": " 󰝚 Music",
+      "key": "└ 󰝚 Music",
       "keyColor": "blue",
     },
 

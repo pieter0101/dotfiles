@@ -2,6 +2,8 @@ window-height = "35"
 window-width = "125"
 quick-terminal-position = "center"
 
+window-inherit-working-directory = false
+
 #background-opacity = 0
 background-blur = true
 

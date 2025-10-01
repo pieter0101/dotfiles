@@ -70,17 +70,18 @@ elif [[ "$UNAME" == "Linux" ]]; then
         . /etc/os-release
     fi
     if [[ "$ID" = "gentoo" ]]; then
-        echo "Found Gentoo"
-        echo "Syncing repository..."
-        sudo emerge --sync
-        echo
-        echo "Updating system..."
-        sudo emerge --ask --verbose --update --deep --newuse @world
-        echo
-        echo "Cleaning up..."
-        sudo emerge --depclean
-        sudo eclean --deep distfiles
-        sudo eclean --deep packages
+        sudo bash -c '
+        echo "Found Gentoo";
+        echo "Syncing repository...";
+        emerge --sync;
+        echo;
+        echo "Updating system...";
+        emerge --ask --verbose --update --deep --newuse @world;
+        echo "Cleaning up...";
+        emerge --depclean;
+        eclean --deep distfiles;
+        eclean --deep packages;
+        '
     fi
 
     if [[ "$ID" = "arch" ]]; then

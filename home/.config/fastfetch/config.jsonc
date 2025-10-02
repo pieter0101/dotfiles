@@ -118,18 +118,16 @@
       "format": "{#1}{#blue}┌─Other"
     },
     {
+      "type": "media",
+      "key": "├ 󰝚 Music",
+      "keyColor": "blue",
+    },
+    {
       "type": "command",
-      "key": "├  OS Age",
+      "key": "└  OS Age",
       "keyColor": "blue",
       "text": "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days"
     },
-
-    {
-      "type": "media",
-      "key": "└ 󰝚 Music",
-      "keyColor": "blue",
-    },
-
     "break",
     "colors"
   ]

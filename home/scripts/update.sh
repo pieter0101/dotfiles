@@ -70,8 +70,9 @@ elif [[ "$UNAME" == "Linux" ]]; then
         . /etc/os-release
     fi
     if [[ "$ID" = "gentoo" ]]; then
-        sudo bash -c '
         echo "Found Gentoo";
+
+        sudo bash -c '
         echo "Syncing repository...";
         emerge --sync;
         echo;

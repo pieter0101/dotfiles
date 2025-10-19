@@ -23,9 +23,11 @@
       "tailscale" = 1475387142;
       "xcode" = 497799835;
     };
-    onActivation.autoUpdate = true;
-    onActivation.cleanup = "zap";
-    onActivation.upgrade = true;
+    onActivation = {
+      autoUpdate = true;
+      cleanup = "zap";
+      upgrade = true;
+    };
   };
 
   services.aerospace.enable = true;

@@ -42,7 +42,7 @@
         Bluetooth = false;
         Display = false;
         FocusModes = false;
-        NowPlaying = true;
+        NowPlaying = false;
         Sound = false;
       };
       dock.show-recents = false;

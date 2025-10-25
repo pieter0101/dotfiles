@@ -11,12 +11,14 @@
     ];
     casks = [
       "ghostty"
+      "nikitabobko/tap/aerospace"
       "obs"
       "spotify"
       "raspberry-pi-imager"
       "zen"
     ];
     taps = [
+      "nikitabobko/tap"
     ];
     masApps = {
       "Bitwarden" = 1352778147;
@@ -29,8 +31,6 @@
       upgrade = true;
     };
   };
-
-  services.aerospace.enable = true;
 
   security.pam.services.sudo_local.touchIdAuth = true;
 

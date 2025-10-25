@@ -7,20 +7,15 @@
   homebrew = {
     enable = true;
     brews = [
-      #"syncthing"
     ];
     casks = [
-      "ghostty"
       "nikitabobko/tap/aerospace"
-      "obs"
-      "spotify"
-      "raspberry-pi-imager"
-      "zen"
     ];
     taps = [
       "nikitabobko/tap"
     ];
     masApps = {
+      "Apple developer" = 640199958;
       "Bitwarden" = 1352778147;
       "tailscale" = 1475387142;
       "xcode" = 497799835;

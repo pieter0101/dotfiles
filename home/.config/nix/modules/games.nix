@@ -3,8 +3,6 @@
   environment.systemPackages =
     with pkgs;
     [
-      prismlauncher
-      ryubing
     ]
     ++ (lib.optionals (pkgs.system == "x86_64-linux") [
       dolphin-emu
@@ -14,10 +12,18 @@
       openttd
       pcsx2
       ppsspp
+      prismlauncher
       retroarch
       rpcs3
+      ryubing
       sunshine
       superTux
       superTuxKart
     ]);
+
+  homebrew.casks = [
+    "moonlight"
+    "prismlauncher"
+    "steam"
+  ];
 }

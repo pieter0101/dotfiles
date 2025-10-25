@@ -3,20 +3,17 @@
   environment.systemPackages =
     with pkgs;
     [
-      audacity
-      blender
-      darktable
-      qbittorrent
-      syncthing
-      vesktop
     ]
     ++ (lib.optionals (pkgs.system == "x86_64-linux") [
       aseprite
+      audacity
       baobab
       blanket
+      blender
       boxbuddy
       chromium
       cpu-x
+      darktable
       freecad
       ghostty
       ghostty
@@ -36,14 +33,35 @@
       parabolic
       pavucontrol
       qalculate-gtk
+      qbittorrent
       qpwgraph
       renderdoc
+      syncthing
       thunderbird
       tor-browser
       upscaler
+      vesktop
       video-trimmer
       vlc
     ]);
+
+  homebrew = {
+    brews = [
+      "syncthing"
+    ];
+    casks = [
+      "audacity"
+      "blender"
+      "darktable"
+      "ghostty"
+      "obs"
+      "raspberry-pi-imager"
+      "spotify"
+      "vesktop"
+      "wine-stable"
+      "zen"
+    ];
+  };
 
   fonts.packages = [
     pkgs.nerd-fonts.jetbrains-mono

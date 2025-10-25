@@ -72,7 +72,6 @@
               ./modules/development.nix
               ./modules/desktop.nix
               ./modules/macOS.nix
-              ./modules/macOS-personal.nix
               ./modules/games.nix
               ./modules/fun.nix
             ];

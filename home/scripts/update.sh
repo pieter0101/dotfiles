@@ -76,8 +76,14 @@ elif [[ "$UNAME" == "Linux" ]]; then
         echo "Syncing repository...";
         emerge --sync;
         echo;
+
         echo "Updating system...";
         emerge --ask --verbose --update --deep --newuse @world;
+        echo;
+        echo "Before continueing, make sure you have read any potential messages above";
+        read -r -p "Press enter to continue " response;
+        echo;
+
         echo "Cleaning up...";
         emerge --depclean;
         eclean --deep distfiles;

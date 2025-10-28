@@ -27,17 +27,25 @@ UNAME="$(uname)"
 if [[ "$UNAME" == "Darwin" ]]; then
     echo "Found macOS"
     if command -v nix >/dev/null 2>&1; then
-        echo "Updating nix-darwin..."
+        echo "Updating Nix Darwin configuration..."
+        echo "Updating flake..."
         nix flake update --flake "$NIX_LOCATION"
+        echo
+        echo "Rebuilding system..."
         sudo darwin-rebuild switch --flake "$NIX_LOCATION"#"$(scutil --get LocalHostName)"
+        echo
+        echo "Collecting garbage..."
         nix-collect-garbage --delete-older-than 7d
+        echo
     fi
 
     if command -v mas >/dev/null 2>&1; then
         echo "Updating App Store apps..."
         mas upgrade
+        echo
     else
         echo "mas not found, skipping App Store updates"
+        echo
     fi
 
     dotfiles
@@ -70,7 +78,7 @@ elif [[ "$UNAME" == "Linux" ]]; then
         . /etc/os-release
     fi
     if [[ "$ID" = "gentoo" ]]; then
-        echo "Found Gentoo";
+        echo "Found Gentoo"
 
         sudo bash -c '
         echo "Syncing repository...";

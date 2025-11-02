@@ -10,6 +10,7 @@
     ];
     casks = [
       "nikitabobko/tap/aerospace"
+      "altserver"
     ];
     taps = [
       "nikitabobko/tap"

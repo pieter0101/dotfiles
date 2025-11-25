@@ -88,7 +88,7 @@ elif [[ "$UNAME" == "Linux" ]]; then
         echo "Updating system...";
         emerge --ask --verbose --update --deep --newuse @world;
         echo;
-        echo "Before continueing, make sure you have read any potential messages above";
+        echo "Before continuing, make sure you have read any potential messages above";
         read -r -p "Press enter to continue " response;
         echo;
 

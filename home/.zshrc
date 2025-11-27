@@ -80,6 +80,7 @@ alias @world='sudo emerge --ask --verbose --update --deep --newuse @world'
 alias flake.nix='nvim ~/.config/nix/flake.nix'
 alias ssh='TERM=xterm-256color ssh'
 alias ip='ip --color=auto'
+alias apb='ansible-playbook'
 
 if command -v equery &>/dev/null; then
     alias eqf='equery f'

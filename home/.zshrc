@@ -25,7 +25,7 @@ export MANPAGER='nvim +Man!'
 export TERMINAL="ghostty"
 export DRIVES_MOUNTPOINT=$HOME/mounts
 
-export PATH=$PATH:$HOME/.local/bin:$HOME/scripts
+export PATH=$PATH:$HOME/.local/bin:$HOME/scripts:/opt/homebrew/bin
 
 export GPG_TTY=$(tty)
 

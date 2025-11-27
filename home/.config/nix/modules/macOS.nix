@@ -9,16 +9,16 @@
     brews = [
     ];
     casks = [
+      "bitwarden"
       "nikitabobko/tap/aerospace"
       "altserver"
+      "tailscale-app"
     ];
     taps = [
       "nikitabobko/tap"
     ];
     masApps = {
       "Apple developer" = 640199958;
-      "Bitwarden" = 1352778147;
-      "tailscale" = 1475387142;
       "xcode" = 497799835;
     };
     onActivation = {

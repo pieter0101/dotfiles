@@ -73,6 +73,7 @@ if [[ "$UNAME" == "Darwin" ]]; then
         echo "No updates found"
     fi
     echo
+
 elif [[ "$UNAME" == "Linux" ]]; then
     if [[ -f /etc/os-release ]]; then
         . /etc/os-release
@@ -93,7 +94,7 @@ elif [[ "$UNAME" == "Linux" ]]; then
         echo;
 
         echo "Cleaning up...";
-        emerge --depclean;
+        emerge --depclean --verbose=n;
         eclean --deep distfiles;
         eclean --deep packages;
         '
